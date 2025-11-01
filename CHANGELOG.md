@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0] - 2025-11-01
+
+### <!-- 0 -->⛰️  Features
+
+- Introduce noise generation utilities and refactor build system
+
+### <!-- 2 -->🚜 Refactor
+
+- Refactor generator to a library; improve build system
+
+### <!-- 7 -->⚙️ Miscellaneous Tasks
+
+- Remove unused generator backup file
+
 ## [0.1.0] - 2025-06-11
 
 ### <!-- 0 -->⛰️  Features
