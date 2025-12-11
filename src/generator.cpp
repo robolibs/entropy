@@ -314,21 +314,21 @@ namespace entropy {
     static const int PrimeY = 1136930381;
     static const int PrimeZ = 1720413743;
 
-int NoiseGen::Hash(int seed, int xPrimed, int yPrimed) {
+    int NoiseGen::Hash(int seed, int xPrimed, int yPrimed) {
         int hash = seed ^ xPrimed ^ yPrimed;
 
         hash *= 0x27d4eb2d;
         return hash;
     }
 
-int NoiseGen::Hash(int seed, int xPrimed, int yPrimed, int zPrimed) {
+    int NoiseGen::Hash(int seed, int xPrimed, int yPrimed, int zPrimed) {
         int hash = seed ^ xPrimed ^ yPrimed ^ zPrimed;
 
         hash *= 0x27d4eb2d;
         return hash;
     }
 
-float NoiseGen::ValCoord(int seed, int xPrimed, int yPrimed) {
+    float NoiseGen::ValCoord(int seed, int xPrimed, int yPrimed) {
         int hash = Hash(seed, xPrimed, yPrimed);
 
         hash *= hash;
@@ -336,7 +336,7 @@ float NoiseGen::ValCoord(int seed, int xPrimed, int yPrimed) {
         return hash * (1 / 2147483648.0f);
     }
 
-float NoiseGen::ValCoord(int seed, int xPrimed, int yPrimed, int zPrimed) {
+    float NoiseGen::ValCoord(int seed, int xPrimed, int yPrimed, int zPrimed) {
         int hash = Hash(seed, xPrimed, yPrimed, zPrimed);
 
         hash *= hash;
