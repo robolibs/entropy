@@ -78,7 +78,7 @@ package("concord")
         if not os.isdir(sourcedir) then
             print("Fetching concord from git...")
             os.mkdir(path.directory(sourcedir))
-            os.execv("git", {"clone", "--quiet", "--depth", "1", "--branch", "2.4.0", 
+            os.execv("git", {"clone", "--quiet", "--depth", "1", "--branch", "2.5.0", 
                             "-c", "advice.detachedHead=false",
                             "https://github.com/onlyhead/concord.git", sourcedir})
         end
