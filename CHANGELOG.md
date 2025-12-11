@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.0] - 2025-12-11
+
+### <!-- 0 -->⛰️  Features
+
+- Implement random walk generation with noise functions
+
+### <!-- 3 -->📚 Documentation
+
+- Add project contributor acknowledgment file
+
+### <!-- 7 -->⚙️ Miscellaneous Tasks
+
+- Update concord dependency to v2.5.0
+
+### Build
+
+- Integrate Concord library for advanced functionality
+- Integrate xmake build system and clang-format
+
 ## [1.0.0] - 2025-11-01
 
 ### <!-- 0 -->⛰️  Features
