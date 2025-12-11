@@ -1,6 +1,7 @@
 #include <cmath>
 #include <doctest/doctest.h>
 #include <entropy/entropy.hpp>
+#include <vector>
 
 TEST_CASE("NoiseGen basic construction") {
     SUBCASE("Default constructor") {

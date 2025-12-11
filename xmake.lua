@@ -67,7 +67,34 @@ option("tests")
     set_description("Enable tests")
 option_end()
 
+-- Define concord package (from git)
+package("concord")
+    add_deps("cmake")
+    set_sourcedir(path.join(os.projectdir(), "build/_deps/concord-src"))
 
+    on_fetch(function (package)
+        -- Clone git repository if not exists
+        local sourcedir = package:sourcedir()
+        if not os.isdir(sourcedir) then
+            print("Fetching concord from git...")
+            os.mkdir(path.directory(sourcedir))
+            os.execv("git", {"clone", "--quiet", "--depth", "1", "--branch", "2.4.0", 
+                            "-c", "advice.detachedHead=false",
+                            "https://github.com/onlyhead/concord.git", sourcedir})
+        end
+    end)
+
+    on_install(function (package)
+        local configs = {}
+        table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:is_debug() and "Debug" or "Release"))
+        import("package.tools.cmake").install(package, configs)
+    end)
+package_end()
+
+
+
+-- Add required packages
+add_requires("concord")
 
 if has_config("tests") then
     add_requires("doctest")
@@ -83,6 +110,9 @@ target("entropy")
     -- Add header files
     add_headerfiles("include/(entropy/**.hpp)")
     add_includedirs("include", {public = true})
+
+    -- Link dependencies
+    add_packages("concord")
 
 
 
@@ -102,6 +132,7 @@ if has_config("examples") and os.projectdir() == os.curdir() then
             set_kind("binary")
             add_files(filepath)
             add_deps("entropy")
+            add_packages("concord")
 
 
 
@@ -118,6 +149,7 @@ if has_config("tests") and os.projectdir() == os.curdir() then
             set_kind("binary")
             add_files(filepath)
             add_deps("entropy")
+            add_packages("concord")
             add_packages("doctest")
             add_includedirs("include")
             add_defines("DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN")

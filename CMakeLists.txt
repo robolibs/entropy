@@ -22,6 +22,10 @@ include(FetchContent)
 # --------------------------------------------------------------------------------------------------
 set(ext_deps)
 
+FetchContent_Declare(concord GIT_REPOSITORY https://github.com/onlyhead/concord.git GIT_TAG 2.4.0)
+FetchContent_MakeAvailable(concord)
+list(APPEND ext_deps concord::concord)
+
 # --------------------------------------------------------------------------------------------------
 # Build library
 set(SOURCES
@@ -36,6 +40,11 @@ target_include_directories(${project_name}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
+
+target_link_libraries(${project_name} PRIVATE ${ext_deps})
+
+# Export dependencies as public (headers use them)
+target_link_libraries(${project_name} PUBLIC ${ext_deps})
 
 target_compile_options(${project_name} PRIVATE ${params})
 
@@ -114,7 +123,7 @@ if(${project_name_upper}_ENABLE_TESTS)
     get_filename_component(test_name "${src_file}" NAME_WE)
     add_executable(${test_name} "${src_file}")
     target_compile_options(${test_name} PRIVATE ${params})
-    target_link_libraries(${test_name} ${project_name}::${project_name} doctest_with_main)
+    target_link_libraries(${test_name} ${project_name}::${project_name} ${ext_deps} doctest_with_main)
     add_test(NAME ${test_name} COMMAND ${test_name})
   endforeach()
 endif()
