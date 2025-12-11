@@ -5,7 +5,7 @@
 #include <vector>
 
 TEST_CASE("Noise smoothness and continuity") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
     gen.SetFrequency(0.1f);
 
     SUBCASE("2D noise continuity") {
@@ -46,7 +46,7 @@ TEST_CASE("Noise smoothness and continuity") {
 }
 
 TEST_CASE("Noise distribution properties") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
     gen.SetFrequency(0.1f);
 
     SUBCASE("2D noise value distribution") {
@@ -99,7 +99,7 @@ TEST_CASE("Noise distribution properties") {
 }
 
 TEST_CASE("Performance and stress testing") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
 
     SUBCASE("Large number of 2D samples") {
         // Test generating many samples doesn't crash or produce invalid values
@@ -130,7 +130,7 @@ TEST_CASE("Performance and stress testing") {
 }
 
 TEST_CASE("Noise with different data types") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
 
     SUBCASE("Double precision coordinates") {
         double x = 1.23456789;
@@ -164,7 +164,7 @@ TEST_CASE("Noise with different data types") {
 }
 
 TEST_CASE("Noise symmetry and patterns") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
     gen.SetFrequency(0.1f);
 
     SUBCASE("Origin-centered sampling") {
@@ -211,11 +211,11 @@ TEST_CASE("Noise symmetry and patterns") {
 }
 
 TEST_CASE("Noise configuration combinations") {
-    entropy::NoiseGen gen(999);
+    entropy::noise::NoiseGen gen(999);
 
     SUBCASE("Perlin + FBm combination") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Perlin);
-        gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Perlin);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
         gen.SetFractalOctaves(4);
         gen.SetFrequency(0.05f);
 
@@ -227,9 +227,9 @@ TEST_CASE("Noise configuration combinations") {
     }
 
     SUBCASE("Cellular + custom settings") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Cellular);
-        gen.SetCellularDistanceFunction(entropy::NoiseGen::CellularDistanceFunction_Manhattan);
-        gen.SetCellularReturnType(entropy::NoiseGen::CellularReturnType_Distance2);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Cellular);
+        gen.SetCellularDistanceFunction(entropy::noise::NoiseGen::CellularDistanceFunction_Manhattan);
+        gen.SetCellularReturnType(entropy::noise::NoiseGen::CellularReturnType_Distance2);
         gen.SetCellularJitter(0.8f);
         gen.SetFrequency(0.02f);
 
@@ -239,8 +239,8 @@ TEST_CASE("Noise configuration combinations") {
     }
 
     SUBCASE("Value + Ridged combination") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Value);
-        gen.SetFractalType(entropy::NoiseGen::FractalType_Ridged);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Value);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_Ridged);
         gen.SetFractalOctaves(6);
         gen.SetFractalGain(0.3f);
         gen.SetFractalLacunarity(2.2f);
@@ -254,7 +254,7 @@ TEST_CASE("Noise configuration combinations") {
 }
 
 TEST_CASE("Edge case coordinate values") {
-    entropy::NoiseGen gen(777);
+    entropy::noise::NoiseGen gen(777);
 
     SUBCASE("Very large positive coordinates") {
         float noise2d = gen.GetNoise(999999.0f, 888888.0f);

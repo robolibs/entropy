@@ -4,10 +4,10 @@
 #include <vector>
 
 TEST_CASE("Fractal type configurations") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
 
     SUBCASE("FractalType_None (default behavior)") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_None);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_None);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -19,7 +19,7 @@ TEST_CASE("Fractal type configurations") {
     }
 
     SUBCASE("FractalType_FBm") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -31,7 +31,7 @@ TEST_CASE("Fractal type configurations") {
     }
 
     SUBCASE("FractalType_Ridged") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_Ridged);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_Ridged);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -43,7 +43,7 @@ TEST_CASE("Fractal type configurations") {
     }
 
     SUBCASE("FractalType_PingPong") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_PingPong);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_PingPong);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -57,16 +57,16 @@ TEST_CASE("Fractal type configurations") {
     SUBCASE("Different fractal types produce different results") {
         float x = 3.5f, y = 4.2f;
 
-        gen.SetFractalType(entropy::NoiseGen::FractalType_None);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_None);
         float none_noise = gen.GetNoise(x, y);
 
-        gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
         float fbm_noise = gen.GetNoise(x, y);
 
-        gen.SetFractalType(entropy::NoiseGen::FractalType_Ridged);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_Ridged);
         float ridged_noise = gen.GetNoise(x, y);
 
-        gen.SetFractalType(entropy::NoiseGen::FractalType_PingPong);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_PingPong);
         float pingpong_noise = gen.GetNoise(x, y);
 
         // Different fractal types should produce different results
@@ -77,8 +77,8 @@ TEST_CASE("Fractal type configurations") {
 }
 
 TEST_CASE("Fractal octaves configuration") {
-    entropy::NoiseGen gen(42);
-    gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+    entropy::noise::NoiseGen gen(42);
+    gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
 
     SUBCASE("Valid octave counts") {
         std::vector<int> octave_counts = {1, 2, 3, 4, 5, 8, 10};
@@ -117,8 +117,8 @@ TEST_CASE("Fractal octaves configuration") {
 }
 
 TEST_CASE("Fractal lacunarity configuration") {
-    entropy::NoiseGen gen(42);
-    gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+    entropy::noise::NoiseGen gen(42);
+    gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
 
     SUBCASE("Valid lacunarity values") {
         std::vector<float> lacunarity_values = {1.0f, 1.5f, 2.0f, 2.5f, 3.0f};
@@ -153,8 +153,8 @@ TEST_CASE("Fractal lacunarity configuration") {
 }
 
 TEST_CASE("Fractal gain configuration") {
-    entropy::NoiseGen gen(42);
-    gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+    entropy::noise::NoiseGen gen(42);
+    gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
 
     SUBCASE("Valid gain values") {
         std::vector<float> gain_values = {0.1f, 0.3f, 0.5f, 0.7f, 0.9f};
@@ -189,8 +189,8 @@ TEST_CASE("Fractal gain configuration") {
 }
 
 TEST_CASE("Fractal weighted strength") {
-    entropy::NoiseGen gen(42);
-    gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+    entropy::noise::NoiseGen gen(42);
+    gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
 
     SUBCASE("Valid weighted strength values") {
         std::vector<float> strength_values = {0.0f, 0.25f, 0.5f, 0.75f, 1.0f};
@@ -226,8 +226,8 @@ TEST_CASE("Fractal weighted strength") {
 }
 
 TEST_CASE("Fractal ping pong strength") {
-    entropy::NoiseGen gen(42);
-    gen.SetFractalType(entropy::NoiseGen::FractalType_PingPong);
+    entropy::noise::NoiseGen gen(42);
+    gen.SetFractalType(entropy::noise::NoiseGen::FractalType_PingPong);
 
     SUBCASE("Valid ping pong strength values") {
         std::vector<float> strength_values = {1.0f, 1.5f, 2.0f, 2.5f, 3.0f};
@@ -262,10 +262,10 @@ TEST_CASE("Fractal ping pong strength") {
 }
 
 TEST_CASE("Complex fractal configurations") {
-    entropy::NoiseGen gen(123);
+    entropy::noise::NoiseGen gen(123);
 
     SUBCASE("FBm with custom parameters") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_FBm);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_FBm);
         gen.SetFractalOctaves(4);
         gen.SetFractalLacunarity(2.1f);
         gen.SetFractalGain(0.6f);
@@ -283,7 +283,7 @@ TEST_CASE("Complex fractal configurations") {
     }
 
     SUBCASE("Ridged fractal with custom parameters") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_Ridged);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_Ridged);
         gen.SetFractalOctaves(6);
         gen.SetFractalLacunarity(2.5f);
         gen.SetFractalGain(0.4f);
@@ -296,7 +296,7 @@ TEST_CASE("Complex fractal configurations") {
     }
 
     SUBCASE("PingPong fractal with custom parameters") {
-        gen.SetFractalType(entropy::NoiseGen::FractalType_PingPong);
+        gen.SetFractalType(entropy::noise::NoiseGen::FractalType_PingPong);
         gen.SetFractalOctaves(3);
         gen.SetFractalPingPongStrength(2.5f);
         gen.SetFractalLacunarity(1.8f);

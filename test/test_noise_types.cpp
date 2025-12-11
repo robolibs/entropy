@@ -3,10 +3,10 @@
 #include <vector>
 
 TEST_CASE("Noise type configurations") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
 
     SUBCASE("OpenSimplex2 noise type") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_OpenSimplex2);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_OpenSimplex2);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -18,7 +18,7 @@ TEST_CASE("Noise type configurations") {
     }
 
     SUBCASE("OpenSimplex2S noise type") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_OpenSimplex2S);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_OpenSimplex2S);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -30,7 +30,7 @@ TEST_CASE("Noise type configurations") {
     }
 
     SUBCASE("Cellular noise type") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Cellular);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Cellular);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -42,7 +42,7 @@ TEST_CASE("Noise type configurations") {
     }
 
     SUBCASE("Perlin noise type") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Perlin);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Perlin);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -54,7 +54,7 @@ TEST_CASE("Noise type configurations") {
     }
 
     SUBCASE("ValueCubic noise type") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_ValueCubic);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_ValueCubic);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -66,7 +66,7 @@ TEST_CASE("Noise type configurations") {
     }
 
     SUBCASE("Value noise type") {
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Value);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Value);
 
         float noise2d = gen.GetNoise(1.0f, 2.0f);
         float noise3d = gen.GetNoise(1.0f, 2.0f, 3.0f);
@@ -80,15 +80,15 @@ TEST_CASE("Noise type configurations") {
     SUBCASE("Different noise types produce different results") {
         float x = 5.0f, y = 3.0f, z = 1.0f;
 
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_OpenSimplex2);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_OpenSimplex2);
         float simplex2d = gen.GetNoise(x, y);
         float simplex3d = gen.GetNoise(x, y, z);
 
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Perlin);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Perlin);
         float perlin2d = gen.GetNoise(x, y);
         float perlin3d = gen.GetNoise(x, y, z);
 
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Value);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Value);
         float value2d = gen.GetNoise(x, y);
         float value3d = gen.GetNoise(x, y, z);
 
@@ -101,10 +101,10 @@ TEST_CASE("Noise type configurations") {
 }
 
 TEST_CASE("Rotation type configurations") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
 
     SUBCASE("RotationType3D_None") {
-        gen.SetRotationType3D(entropy::NoiseGen::RotationType3D_None);
+        gen.SetRotationType3D(entropy::noise::NoiseGen::RotationType3D_None);
 
         float noise = gen.GetNoise(1.0f, 2.0f, 3.0f);
         CHECK(noise >= -1.0f);
@@ -112,7 +112,7 @@ TEST_CASE("Rotation type configurations") {
     }
 
     SUBCASE("RotationType3D_ImproveXYPlanes") {
-        gen.SetRotationType3D(entropy::NoiseGen::RotationType3D_ImproveXYPlanes);
+        gen.SetRotationType3D(entropy::noise::NoiseGen::RotationType3D_ImproveXYPlanes);
 
         float noise = gen.GetNoise(1.0f, 2.0f, 3.0f);
         CHECK(noise >= -1.0f);
@@ -120,7 +120,7 @@ TEST_CASE("Rotation type configurations") {
     }
 
     SUBCASE("RotationType3D_ImproveXZPlanes") {
-        gen.SetRotationType3D(entropy::NoiseGen::RotationType3D_ImproveXZPlanes);
+        gen.SetRotationType3D(entropy::noise::NoiseGen::RotationType3D_ImproveXZPlanes);
 
         float noise = gen.GetNoise(1.0f, 2.0f, 3.0f);
         CHECK(noise >= -1.0f);
@@ -130,13 +130,13 @@ TEST_CASE("Rotation type configurations") {
     SUBCASE("Different rotation types may produce different results") {
         float x = 10.0f, y = 5.0f, z = 2.0f;
 
-        gen.SetRotationType3D(entropy::NoiseGen::RotationType3D_None);
+        gen.SetRotationType3D(entropy::noise::NoiseGen::RotationType3D_None);
         float noise_none = gen.GetNoise(x, y, z);
 
-        gen.SetRotationType3D(entropy::NoiseGen::RotationType3D_ImproveXYPlanes);
+        gen.SetRotationType3D(entropy::noise::NoiseGen::RotationType3D_ImproveXYPlanes);
         float noise_xy = gen.GetNoise(x, y, z);
 
-        gen.SetRotationType3D(entropy::NoiseGen::RotationType3D_ImproveXZPlanes);
+        gen.SetRotationType3D(entropy::noise::NoiseGen::RotationType3D_ImproveXZPlanes);
         float noise_xz = gen.GetNoise(x, y, z);
 
         // Note: These might be the same in some cases, but generally should differ
@@ -151,14 +151,14 @@ TEST_CASE("Rotation type configurations") {
 }
 
 TEST_CASE("Cellular noise configurations") {
-    entropy::NoiseGen gen(42);
-    gen.SetNoiseType(entropy::NoiseGen::NoiseType_Cellular);
+    entropy::noise::NoiseGen gen(42);
+    gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Cellular);
 
     SUBCASE("Cellular distance functions") {
-        std::vector<entropy::NoiseGen::CellularDistanceFunction> distance_funcs = {
-            entropy::NoiseGen::CellularDistanceFunction_Euclidean,
-            entropy::NoiseGen::CellularDistanceFunction_EuclideanSq,
-            entropy::NoiseGen::CellularDistanceFunction_Manhattan, entropy::NoiseGen::CellularDistanceFunction_Hybrid};
+        std::vector<entropy::noise::NoiseGen::CellularDistanceFunction> distance_funcs = {
+            entropy::noise::NoiseGen::CellularDistanceFunction_Euclidean,
+            entropy::noise::NoiseGen::CellularDistanceFunction_EuclideanSq,
+            entropy::noise::NoiseGen::CellularDistanceFunction_Manhattan, entropy::noise::NoiseGen::CellularDistanceFunction_Hybrid};
 
         for (auto func : distance_funcs) {
             gen.SetCellularDistanceFunction(func);
@@ -174,11 +174,11 @@ TEST_CASE("Cellular noise configurations") {
     }
 
     SUBCASE("Cellular return types") {
-        std::vector<entropy::NoiseGen::CellularReturnType> return_types = {
-            entropy::NoiseGen::CellularReturnType_CellValue,    entropy::NoiseGen::CellularReturnType_Distance,
-            entropy::NoiseGen::CellularReturnType_Distance2,    entropy::NoiseGen::CellularReturnType_Distance2Add,
-            entropy::NoiseGen::CellularReturnType_Distance2Sub, entropy::NoiseGen::CellularReturnType_Distance2Mul,
-            entropy::NoiseGen::CellularReturnType_Distance2Div};
+        std::vector<entropy::noise::NoiseGen::CellularReturnType> return_types = {
+            entropy::noise::NoiseGen::CellularReturnType_CellValue,    entropy::noise::NoiseGen::CellularReturnType_Distance,
+            entropy::noise::NoiseGen::CellularReturnType_Distance2,    entropy::noise::NoiseGen::CellularReturnType_Distance2Add,
+            entropy::noise::NoiseGen::CellularReturnType_Distance2Sub, entropy::noise::NoiseGen::CellularReturnType_Distance2Mul,
+            entropy::noise::NoiseGen::CellularReturnType_Distance2Div};
 
         for (auto type : return_types) {
             gen.SetCellularReturnType(type);
@@ -208,10 +208,10 @@ TEST_CASE("Cellular noise configurations") {
     SUBCASE("Cellular configurations produce different results") {
         float x = 7.0f, y = 8.0f;
 
-        gen.SetCellularReturnType(entropy::NoiseGen::CellularReturnType_Distance);
+        gen.SetCellularReturnType(entropy::noise::NoiseGen::CellularReturnType_Distance);
         float dist_noise = gen.GetNoise(x, y);
 
-        gen.SetCellularReturnType(entropy::NoiseGen::CellularReturnType_CellValue);
+        gen.SetCellularReturnType(entropy::noise::NoiseGen::CellularReturnType_CellValue);
         float cell_noise = gen.GetNoise(x, y);
 
         // Different return types should generally produce different results

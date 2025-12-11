@@ -5,24 +5,24 @@
 
 TEST_CASE("NoiseGen basic construction") {
     SUBCASE("Default constructor") {
-        entropy::NoiseGen gen;
+        entropy::noise::NoiseGen gen;
         CHECK_NOTHROW(gen.GetNoise(0.0f, 0.0f));
         CHECK_NOTHROW(gen.GetNoise(0.0f, 0.0f, 0.0f));
     }
 
     SUBCASE("Constructor with seed") {
-        entropy::NoiseGen gen(42);
+        entropy::noise::NoiseGen gen(42);
         CHECK_NOTHROW(gen.GetNoise(0.0f, 0.0f));
 
         // Same seed should produce same results
-        entropy::NoiseGen gen2(42);
+        entropy::noise::NoiseGen gen2(42);
         CHECK(gen.GetNoise(0.0f, 0.0f) == gen2.GetNoise(0.0f, 0.0f));
         CHECK(gen.GetNoise(0.0f, 0.0f, 0.0f) == gen2.GetNoise(0.0f, 0.0f, 0.0f));
     }
 }
 
 TEST_CASE("Basic noise generation") {
-    entropy::NoiseGen gen(1337);
+    entropy::noise::NoiseGen gen(1337);
 
     SUBCASE("2D noise generation") {
         float noise = gen.GetNoise(0.0f, 0.0f);
@@ -45,7 +45,7 @@ TEST_CASE("Basic noise generation") {
 
     SUBCASE("3D noise generation") {
         // Set up the noise generator with a specific noise type
-        gen.SetNoiseType(entropy::NoiseGen::NoiseType_Perlin);
+        gen.SetNoiseType(entropy::noise::NoiseGen::NoiseType_Perlin);
         gen.SetFrequency(0.1f);
 
         float noise = gen.GetNoise(0.5f, 0.5f, 0.5f); // Use non-zero coordinates
@@ -76,7 +76,7 @@ TEST_CASE("Basic noise generation") {
 }
 
 TEST_CASE("Noise consistency") {
-    entropy::NoiseGen gen(123);
+    entropy::noise::NoiseGen gen(123);
 
     SUBCASE("Same coordinates produce same noise") {
         float noise1 = gen.GetNoise(5.5f, -2.3f);
@@ -89,8 +89,8 @@ TEST_CASE("Noise consistency") {
     }
 
     SUBCASE("Deterministic behavior with same seed") {
-        entropy::NoiseGen gen1(999);
-        entropy::NoiseGen gen2(999);
+        entropy::noise::NoiseGen gen1(999);
+        entropy::noise::NoiseGen gen2(999);
 
         for (int i = 0; i < 20; ++i) {
             float x = i * 0.5f;
@@ -105,8 +105,8 @@ TEST_CASE("Noise consistency") {
 
 TEST_CASE("Seed effects") {
     SUBCASE("Different seeds produce different noise") {
-        entropy::NoiseGen gen1(1);
-        entropy::NoiseGen gen2(2);
+        entropy::noise::NoiseGen gen1(1);
+        entropy::noise::NoiseGen gen2(2);
 
         float noise1 = gen1.GetNoise(0.7f, 0.3f); // Use non-zero coordinates
         float noise2 = gen2.GetNoise(0.7f, 0.3f);
@@ -118,7 +118,7 @@ TEST_CASE("Seed effects") {
     }
 
     SUBCASE("SetSeed changes noise output") {
-        entropy::NoiseGen gen;
+        entropy::noise::NoiseGen gen;
         gen.SetSeed(100);
         float noise1 = gen.GetNoise(1.0f, 1.0f);
 
@@ -130,7 +130,7 @@ TEST_CASE("Seed effects") {
 }
 
 TEST_CASE("Frequency effects") {
-    entropy::NoiseGen gen(42);
+    entropy::noise::NoiseGen gen(42);
 
     SUBCASE("SetFrequency changes noise characteristics") {
         gen.SetFrequency(0.01f);
@@ -160,7 +160,7 @@ TEST_CASE("Frequency effects") {
 }
 
 TEST_CASE("Edge cases and robustness") {
-    entropy::NoiseGen gen;
+    entropy::noise::NoiseGen gen;
 
     SUBCASE("Large coordinate values") {
         CHECK_NOTHROW(gen.GetNoise(1000000.0f, 1000000.0f));
