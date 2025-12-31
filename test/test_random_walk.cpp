@@ -58,9 +58,9 @@ TEST_CASE("RandomWalk path generation") {
         double speed = walker.get_speed();
         const auto &path = walker.get_path();
 
-        for (size_t i = 1; i < path.size(); ++i) {
-            double dx = std::abs(path[i].point.x - path[i - 1].point.x);
-            double dy = std::abs(path[i].point.y - path[i - 1].point.y);
+        for (size_t i = 1; i < path.waypoints.size(); ++i) {
+            double dx = std::abs(path.waypoints[i].point.x - path.waypoints[i - 1].point.x);
+            double dy = std::abs(path.waypoints[i].point.y - path.waypoints[i - 1].point.y);
 
             // Each step should move by 0 or speed in each direction
             CHECK((dx < 0.001 || std::abs(dx - speed) < 0.001));
@@ -86,9 +86,9 @@ TEST_CASE("RandomWalk deterministic behavior") {
         const auto &path1 = walker1.get_path();
         const auto &path2 = walker2.get_path();
 
-        for (size_t i = 0; i < path1.size(); ++i) {
-            CHECK(path1[i].point.x == path2[i].point.x);
-            CHECK(path1[i].point.y == path2[i].point.y);
+        for (size_t i = 0; i < path1.waypoints.size(); ++i) {
+            CHECK(path1.waypoints[i].point.x == path2.waypoints[i].point.x);
+            CHECK(path1.waypoints[i].point.y == path2.waypoints[i].point.y);
         }
     }
 
@@ -121,9 +121,9 @@ TEST_CASE("RandomWalk move patterns") {
         const auto &path = walker.get_path();
 
         bool has_diagonal = false;
-        for (size_t i = 1; i < path.size(); ++i) {
-            double dx = std::abs(path[i].point.x - path[i - 1].point.x);
-            double dy = std::abs(path[i].point.y - path[i - 1].point.y);
+        for (size_t i = 1; i < path.waypoints.size(); ++i) {
+            double dx = std::abs(path.waypoints[i].point.x - path.waypoints[i - 1].point.x);
+            double dy = std::abs(path.waypoints[i].point.y - path.waypoints[i - 1].point.y);
 
             // Diagonal move: both dx and dy are non-zero
             if (dx > 0.001 && dy > 0.001) {
@@ -146,9 +146,9 @@ TEST_CASE("RandomWalk move patterns") {
         double speed = walker.get_speed();
         const auto &path = walker.get_path();
 
-        for (size_t i = 1; i < path.size(); ++i) {
-            double dx = std::abs(path[i].point.x - path[i - 1].point.x);
-            double dy = std::abs(path[i].point.y - path[i - 1].point.y);
+        for (size_t i = 1; i < path.waypoints.size(); ++i) {
+            double dx = std::abs(path.waypoints[i].point.x - path.waypoints[i - 1].point.x);
+            double dy = std::abs(path.waypoints[i].point.y - path.waypoints[i - 1].point.y);
 
             // Neumann: only one of dx or dy should be non-zero (no diagonals)
             bool is_cardinal = (dx < 0.001 && dy > 0.001) || (dx > 0.001 && dy < 0.001);
@@ -356,9 +356,9 @@ TEST_CASE("RandomWalk configuration setters") {
         double speed = walker.get_speed();
 
         // Verify no diagonal moves
-        for (size_t i = 1; i < path.size(); ++i) {
-            double dx = std::abs(path[i].point.x - path[i - 1].point.x);
-            double dy = std::abs(path[i].point.y - path[i - 1].point.y);
+        for (size_t i = 1; i < path.waypoints.size(); ++i) {
+            double dx = std::abs(path.waypoints[i].point.x - path.waypoints[i - 1].point.x);
+            double dy = std::abs(path.waypoints[i].point.y - path.waypoints[i - 1].point.y);
 
             bool is_cardinal = (dx < 0.001 && dy > 0.001) || (dx > 0.001 && dy < 0.001);
             CHECK(is_cardinal);
