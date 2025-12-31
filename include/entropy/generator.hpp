@@ -264,7 +264,7 @@ namespace entropy {
 
         // ============ IMPLEMENTATION ============
 
-        NoiseGen::NoiseGen(int seed) {
+        inline NoiseGen::NoiseGen(int seed) {
             mSeed = seed;
             mFrequency = 0.01f;
             mNoiseType = NoiseType_OpenSimplex2;

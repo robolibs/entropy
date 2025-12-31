@@ -267,7 +267,7 @@ namespace entropy {
 
         inline int RandomWalk::get_total_steps() const { return total_steps_; }
 
-        const char *RandomWalk::walker_type_name(WalkerType type) {
+        inline const char *RandomWalk::walker_type_name(WalkerType type) {
             switch (type) {
             case WalkerType::Slow:
                 return "Slow Walker";
