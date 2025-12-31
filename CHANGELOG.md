@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.4] - 2025-12-31
+
+### <!-- 0 -->⛰️  Features
+
+- Add inline specifier to constructor and function
+
 ## [0.0.3] - 2025-12-31
 
 ### <!-- 0 -->⛰️  Features
