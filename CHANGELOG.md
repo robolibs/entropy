@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.2] - 2025-12-31
+
+### <!-- 1 -->🐛 Bug Fixes
+
+- Update random walk tests and build process
+
+### <!-- 2 -->🚜 Refactor
+
+- Harmonize build system configuration
+
 ## [1.1.0] - 2025-12-11
 
 ### <!-- 0 -->⛰️  Features
