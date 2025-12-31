@@ -29,10 +29,10 @@ namespace entropy {
             return dist(rng_);
         }
 
-        concord::Point RandomWalk::get_random_startpoint() {
+        datapod::Point RandomWalk::get_random_startpoint() {
             double range = std::sqrt(static_cast<double>(total_steps_)) * config_.start_range_factor;
             std::uniform_real_distribution<double> dist(-range, range);
-            return concord::Point(dist(rng_), dist(rng_), 0.0);
+            return datapod::Point{dist(rng_), dist(rng_), 0.0};
         }
 
         Direction RandomWalk::get_random_direction() {
@@ -48,7 +48,7 @@ namespace entropy {
             }
         }
 
-        void RandomWalk::plan_next_step(Direction direction, const concord::Point &current) {
+        void RandomWalk::plan_next_step(Direction direction, const datapod::Point &current) {
             double dx = 0.0, dy = 0.0;
 
             switch (direction) {
@@ -82,34 +82,34 @@ namespace entropy {
                 break;
             }
 
-            concord::Point new_point(current.x + dx, current.y + dy, current.z);
-            path_.add(concord::Pose(new_point, concord::Euler()));
+            datapod::Point new_point{current.x + dx, current.y + dy, current.z};
+            path_.waypoints.push_back(datapod::Pose{new_point, datapod::Quaternion{}});
         }
 
         void RandomWalk::generate() {
-            path_.clear();
+            path_.waypoints.clear();
 
             // Set starting point
-            concord::Point start_point;
+            datapod::Point start_point;
             if (config_.random_start) {
                 start_point = get_random_startpoint();
             } else {
-                start_point = concord::Point(0.0, 0.0, 0.0);
+                start_point = datapod::Point{0.0, 0.0, 0.0};
             }
 
             // Add starting pose
-            path_.add(concord::Pose(start_point, concord::Euler()));
+            path_.waypoints.push_back(datapod::Pose{start_point, datapod::Quaternion{}});
 
             // Generate path
             for (int step = 1; step <= total_steps_; ++step) {
                 Direction dir = get_random_direction();
-                plan_next_step(dir, path_[path_.size() - 1].point);
+                plan_next_step(dir, path_.waypoints[path_.waypoints.size() - 1].point);
             }
         }
 
-        const concord::Path &RandomWalk::get_path() const { return path_; }
+        const datapod::Path &RandomWalk::get_path() const { return path_; }
 
-        concord::Path &RandomWalk::get_path() { return path_; }
+        datapod::Path &RandomWalk::get_path() { return path_; }
 
         double RandomWalk::get_speed() const { return walker_speed_; }
 
@@ -129,18 +129,18 @@ namespace entropy {
             }
         }
 
-        concord::Point RandomWalk::get_start_point() const {
-            if (path_.empty()) {
-                return concord::Point();
+        datapod::Point RandomWalk::get_start_point() const {
+            if (path_.waypoints.empty()) {
+                return datapod::Point{};
             }
-            return path_[0].point;
+            return path_.waypoints[0].point;
         }
 
-        concord::Point RandomWalk::get_end_point() const {
-            if (path_.empty()) {
-                return concord::Point();
+        datapod::Point RandomWalk::get_end_point() const {
+            if (path_.waypoints.empty()) {
+                return datapod::Point{};
             }
-            return path_[path_.size() - 1].point;
+            return path_.waypoints[path_.waypoints.size() - 1].point;
         }
 
         void RandomWalk::set_seed(int seed) {
@@ -224,9 +224,9 @@ namespace entropy {
 
         size_t WalkSimulation::num_walkers() const { return walkers_.size(); }
 
-        concord::Bound WalkSimulation::get_bounds() const {
+        datapod::Box WalkSimulation::get_bounds() const {
             if (walkers_.empty()) {
-                return concord::Bound();
+                return datapod::Box{};
             }
 
             double min_x = std::numeric_limits<double>::max();
@@ -236,7 +236,7 @@ namespace entropy {
 
             for (const auto &walker : walkers_) {
                 const auto &path = walker.get_path();
-                for (const auto &pose : path) {
+                for (const auto &pose : path.waypoints) {
                     min_x = std::min(min_x, pose.point.x);
                     max_x = std::max(max_x, pose.point.x);
                     min_y = std::min(min_y, pose.point.y);
@@ -244,10 +244,12 @@ namespace entropy {
                 }
             }
 
-            // Create bound using Pose (at min corner) and Size (dimensions)
-            concord::Pose min_pose(concord::Point(min_x, min_y, 0.0), concord::Euler());
-            concord::Size dimensions(max_x - min_x, max_y - min_y, 0.0);
-            return concord::Bound(min_pose, dimensions);
+            // Create box using Pose (at center) and Size (dimensions)
+            double center_x = (min_x + max_x) / 2.0;
+            double center_y = (min_y + max_y) / 2.0;
+            datapod::Pose center_pose{datapod::Point{center_x, center_y, 0.0}, datapod::Quaternion{}};
+            datapod::Size dimensions{max_x - min_x, max_y - min_y, 0.0};
+            return datapod::Box{center_pose, dimensions};
         }
 
     } // namespace path

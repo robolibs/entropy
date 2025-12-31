@@ -4,7 +4,7 @@
 #pragma once
 
 #include <cmath>
-#include <concord/concord.hpp>
+#include <datapod/datapod.hpp>
 #include <random>
 
 namespace entropy {
@@ -45,14 +45,14 @@ namespace entropy {
             void generate();
 
             // Get the generated path
-            const concord::Path &get_path() const;
-            concord::Path &get_path();
+            const datapod::Path &get_path() const;
+            datapod::Path &get_path();
 
             // Get walker properties
             double get_speed() const;
             WalkerType get_walker_type() const;
-            concord::Point get_start_point() const;
-            concord::Point get_end_point() const;
+            datapod::Point get_start_point() const;
+            datapod::Point get_end_point() const;
 
             // Configuration setters (must be called before generate())
             void set_seed(int seed);
@@ -71,14 +71,14 @@ namespace entropy {
             int total_steps_;
             WalkConfig config_;
             double walker_speed_;
-            concord::Path path_;
+            datapod::Path path_;
             std::mt19937 rng_;
 
             void init_speed();
             double get_random_speed();
-            concord::Point get_random_startpoint();
+            datapod::Point get_random_startpoint();
             Direction get_random_direction();
-            void plan_next_step(Direction direction, const concord::Point &current);
+            void plan_next_step(Direction direction, const datapod::Point &current);
         };
 
         // Multi-walker simulation
@@ -101,7 +101,7 @@ namespace entropy {
             size_t num_walkers() const;
 
             // Get bounding box of all paths
-            concord::Bound get_bounds() const;
+            datapod::Box get_bounds() const;
 
           private:
             int total_steps_;
