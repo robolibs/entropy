@@ -2,14 +2,14 @@
 -- NOTE: Due to xmake description domain limitations, PROJECT_NAME must be hardcoded
 --       and kept in sync with the NAME file. The VERSION is read dynamically.
 local PROJECT_NAME = "entropy"
-local PROJECT_VERSION = "0.0.5"
+local PROJECT_VERSION = "0.0.6"
 
 -- Dependencies formats:
 --   Git:    {"name", "https://github.com/org/repo.git", "tag"}
 --   Local:  {"name", "../path/to/local"}  (optional: uses git if not found)
 --   System: "pkgconfig::libname" or {system = "boost"}
 local LIB_DEPS = {
-    {"datapod", "https://github.com/robolibs/datapod.git", "0.0.22"},
+    {"datapod", "https://github.com/robolibs/datapod.git", "0.0.29"},
 }
 local EXAMPLE_DEPS = {
     -- {system = "rerun_sdk"},
