@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.7] - 2026-01-18
+
+### <!-- 7 -->⚙️ Miscellaneous Tasks
+
+- Centralize project metadata into PROJECT file
+
 ## [0.0.6] - 2026-01-05
 
 ### <!-- 1 -->🐛 Bug Fixes
